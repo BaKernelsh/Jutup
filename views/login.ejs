@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="/public/css/register.css">
+</head>
+<body>
+<a href="/">
+    <img src="/public/images/logo_f0f0f0.png" alt="Logo" width="210" height="70">
+</a>
+<div class="row">
+    <div class="container">
+        <form class="register-form">
+            <h2>Logowanie</h2>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Hasło:</label>
+                <button class="tog-pass-bttn" type="button" onClick="togglePasswordVisibility()" style="float:right">
+                    <img id="togglePassImg" src="/public/images/eye.png" alt="show password" height="15" width="15">
+                </button>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit">Zaloguj się</button>
+        </form>
+    </div>
+    <div class="login-container">
+        Nie masz konta ?
+        <a href="/register">
+            <button class="to-login-bttn" href="/">Zarejestruj się</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    function togglePasswordVisibility(){
+        const passwordInput = document.getElementById("password");
+        const togglePassImg = document.getElementById("togglePassImg");
+
+        if(passwordInput.type === "password"){
+            passwordInput.type = "text";
+            togglePassImg.src = "/public/images/hidden.png";
+        }else{
+            passwordInput.type = "password";
+            togglePassImg.src = "/public/images/eye.png";
+        }
+    }
+</script>
+
+</body>
+</html>

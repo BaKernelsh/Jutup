@@ -1,0 +1,72 @@
+.container-fluid {
+    padding-top: 56px; /* Adjust this value based on your navbar height */
+}
+
+.sidenav {
+    height: 100%; /* Full-height sidebar */
+    width: 250px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed sidebar */
+    /* z-index: 1; /* Stay on top of everything */
+    top: 56px; /* Place the sidebar below the navbar */
+    left: 0;
+    background-color: #f8f9fa; /* Sidebar background color */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    border: 1px solid red;
+
+}
+
+.content {
+    margin-left: 200px; /* Match the width of the sidebar */
+    padding: 20px;
+}
+
+/* The navigation menu links */
+.sidebar-a {
+    text-decoration: none;
+    font-size: 25px;
+    color: #000000;
+    display: block;
+    margin-left: 8px;
+
+}
+
+.sidebar-div {
+    height: 40px;
+    font-size: large;
+    border-bottom: 1px dimgray solid;
+    align-content: center;
+    width: 190px;
+}
+
+.sidebar-sub {
+    height: 40px;
+    font-size: large;
+    align-content: center;
+    width: 190px;
+    margin-bottom: 13px;
+}
+
+.col-lg-custom-sidebar {
+    width: 180px;
+}
+
+.col-lg-custom-content {
+    width: 1740px;
+}
+
+.col-lg-1-5 {
+    width: 15.5%;
+}
+
+.col-lg-10-5 {
+    width: 84.5%;
+}
+
+.checked {
+    color: orange;
+}
+
+.star-rating {
+    font-size: 40px;
+}
