@@ -1,0 +1,70 @@
+<%- include ("layouts/header")%>
+
+
+<!-- Main content -->
+<div class="col" style="border: 1px solid black; padding-left:200px;">
+    <div class="container-fluid p-0" >
+        <h1 style="margin-bottom: 6px">Tytuł</h1>
+
+            <video  controls>
+                <source src="/public/9712579-uhd_3840_2160_30fps.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+        <div class="row" style="margin-top: 8px; margin-left: 0; margin-right: 10%">
+            <a href="/channel">
+             <img src="/public/images/Useravatar.png" alt="useravatar" width="47" height="47">
+            </a>
+            <div style="float: left; margin-left: 6px">
+                <a href="/channel"> <b>Kanał 1</b> </a><br>
+                <img src="/public/images/heart_unfilled.png" alt="from subscribers" width="20" height="20">
+                <span style="font-weight: bold; font-size: 20px; vertical-align: middle">Subskrybuj</span>
+            </div>
+            <div class="ml-auto">
+                <span class="fa fa-star checked fa-2x"></span>
+                <span class="fa fa-star checked fa-2x"></span>
+                <span class="fa fa-star checked fa-2x"></span>
+                <span class="fa fa-star checked fa-2x"></span>
+                <span class="fa fa-star fa-2x"></span>
+            </div>
+        </div>
+
+        <div class="info-comment-section" style="margin-right: 10%">
+            <h3>Opis</h3>
+            <p class="desc-p">Ten film przedstawia coś<br>blablabla</p>
+
+            <h3>Komentarze</h3>
+
+            <p style="margin-bottom: 8px">Musisz być zalogowanym, żeby dodać komentarz</p>
+            <button class="login-bttn">
+                <img src="/public/images/user-profile.png" alt="login" width="25" height="25">
+                <span style="display: inline-block; vertical-align: middle;"> Zaloguj się</span>
+
+            </button>
+
+            <%- include ("comment") %>
+            <%- include ("comment") %>
+            <%- include ("comment") %>
+
+<!--            <div class="comments">
+                <div class="comment">
+                    <strong>User 1:</strong> This is a great video!
+                </div>
+                <div class="comment">
+                    <strong>User 2:</strong> I agree, very informative.
+                </div>
+                &lt;!&ndash; Add more comments dynamically using JavaScript &ndash;&gt;
+            </div>
+
+            <div class="comment-form">
+                <h3>Add Your Comment</h3>
+                <form id="commentForm">
+                    <textarea name="comment" placeholder="Write your comment here..." required></textarea>
+                    <br>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>-->
+
+<%- include ("layouts/footer")%>
+

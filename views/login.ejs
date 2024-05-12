@@ -12,12 +12,16 @@
 </a>
 <div class="row">
     <div class="container">
-        <form class="register-form">
+        <form class="register-form" action="/login" method="POST">
             <h2>Logowanie</h2>
-
+            <% if (message != "") {%>
+            <div class="alert alert-success">
+                <%= message%>
+            </div>
+            <% } %>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email"  <% if(email != "") {%> value="<%= email %>" <% } %> required>
             </div>
 
             <div class="form-group">

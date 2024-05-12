@@ -1,0 +1,42 @@
+.form-group{
+    margin-bottom: 20px;
+}
+
+.form-group label {
+
+    margin-bottom: 5px;
+    text-align: left;
+    color: #666;
+    float: left;
+}
+
+.form-group input {
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #000000;
+    background-color: #f0f0f0;
+}
+
+.form-group textarea {
+    width: 500px;
+    padding: 10px;
+    border: 1px solid #000000;
+    background-color: #f0f0f0;
+}
+
+.movie-form button[type="submit"] {
+    margin-left: 30px;
+    height: 40px;
+    padding: 10px 20px 20px 20px;
+    background-color: #000000;
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: center;
+}
+
+.movie-form button[type="submit"]:hover {
+    background-color: #333333;
+}
