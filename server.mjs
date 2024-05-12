@@ -3,6 +3,7 @@ import expressSession from "express-session";
 import "express-async-errors";
 import basic from "./routes/basic.mjs";
 import video from "./routes/video.mjs";
+import playlist from "./routes/playlist.mjs";
 import path from "path";
 import { fileURLToPath } from 'url';
 import bodyParser from "body-parser";
@@ -28,6 +29,7 @@ app.set("view engine", "ejs");
 app.use(basic);
 app.use(video);
 app.use(channel);
+app.use(playlist);
 //app.use("/movies", movies);
 
 /*app.use((err, req, res, next) => {
