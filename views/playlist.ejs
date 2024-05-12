@@ -1,0 +1,80 @@
+<%- include ("layouts/header")%>
+
+<div class="col" style="border: 1px solid black;">
+    <div class="container-fluid p-0" >
+        <div class="channel-banner" style="display: flex; align-items: center;">
+            <h1 style="margin-left: 16px; font-size: 60px">Playlista 1</h1>
+            <button onclick="openForm" style="display: inline-block; vertical-align: middle; margin-left: 15px; border: none">
+                <img src="/public/images/change.png" alt="change playlists name" height="30" width="30">
+            </button>
+        </div>
+
+        <div class="row align-items-center" style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;">
+            <h4>Zawiera 123 filmy</h4>
+
+            <button class="playlist-bttn" style="padding: 10px 15px; border-radius: 30px; margin-left: 2%">
+                <img src="/public/images/play-256.png" alt="Odtwórz wszystkie" width="25" height="25">
+                <span style="display: inline-block; vertical-align: middle">Odtwórz wszystkie</span>
+            </button>
+
+            <button class="playlist-bttn" style="padding: 10px 15px; border-radius: 30px; margin-left: 2%">
+                <img src="/public/images/shuffle_playlist.png" alt="Odtwórz losowo" width="25" height="25">
+                <span style="display: inline-block; vertical-align: middle">Losowa kolejność</span>
+            </button>
+
+            <a class="ml-auto" href="/playlists" style="margin-right: 2px">
+                <img src="/public/images/trash.png" alt="delete playlist" width="25" height="25">
+            </a>
+        </div>
+
+        <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:15px; margin-left: 10%; margin-right: 10%;">
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+
+        </div>
+        <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:15px; margin-left: 10%; margin-right: 10%;">
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+
+        </div>
+        <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:15px; margin-left: 10%; margin-right: 10%;">
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+            <%- include ("thumbnails/movieOnChannel")%>
+
+        </div>
+
+        <div class="form-popup" id="chngPlistNm" >
+            <form>
+                <h3>Wprowadź nową nazwę dla playlisty</h3>
+                <button onclick="closeForm" style="display: inline-block; vertical-align: center;">
+                    <img src="/public/images/closeX.png" alt="close popup" width="10" height="10">
+                </button>
+                <input type="text" name="PlistName" id="PlistName">
+            </form>
+        </div>
+
+        <script>
+            function openForm() {
+                const formPopup = document.getElementById("chngPlistNm");
+                // Calculate the position to center the form
+                const topPosition = (window.innerHeight - formPopup.offsetHeight) / 2;
+                const leftPosition = (window.innerWidth - formPopup.offsetWidth) / 2;
+                // Set the position of the form
+                formPopup.style.top = topPosition + "px";
+                formPopup.style.left = leftPosition + "px";
+                // Display the form
+                formPopup.style.display = "flex";
+
+
+                function closeForm() {
+                document.getElementById("chngPlistNm").style.display = "none";
+            }
+        </script>
+
+<%- include ("layouts/footer")%>

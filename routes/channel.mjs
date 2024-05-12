@@ -5,7 +5,32 @@ import db from "../database/conn.mjs";
 const router = express.Router();
 
 router.get("/channel", (req, res) => {
-    res.render("channel", {isLoggedIn: false});
+    res.render("channel", {isLoggedIn: false, own: false});
+});
+
+router.get("/channel/own", (req, res) => {
+    res.render("channel", {isLoggedIn: true, own: true});
+});
+
+router.get("/settings", (req, res) => {
+    res.render("settings/settings", {isLoggedIn: true});
+});
+
+router.get("/settings/changepassword", (req, res) => {
+    res.render("settings/changepassword", {isLoggedIn: true, oldPassGood: true, message: ""});
+});
+
+router.post("/settings/changepassword", (req, res) => {
+    if(!req.body.oldPassword ==="dobre"){
+        res.render("settings/changepassword",{isLoggedIn: true, oldPassGood: false});
+    }
+    else {
+        if(!req.body.password === req.body.confirmPassword) {
+            res.render("settings/changepassword",{isLoggedIn: true, oldPassGood: true, message: "notmatch"});
+        }else {
+            res.render("settings/changepassword",{isLoggedIn: true, oldPassGood: true, message: "ok"});
+        }
+    }
 })
 
 export default router;

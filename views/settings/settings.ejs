@@ -1,0 +1,43 @@
+<%- include ("../layouts/header")%>
+
+<div class="col" style="border: 1px solid black;">
+    <div class="container-fluid p-0" >
+        <img src="/public/images/settings_icon.png" alt="settings" width="50" height="50" style="margin-left: 0">
+        <h1 style="display: inline-block; vertical-align: middle;">Ustawienia kanału</h1>
+        <hr style="border-color: black; margin-top: 4px;">
+
+        <h3 style="margin-top: 25px">Filmy</h3>
+        <hr style="border-color: black; margin-top: 4px;">
+
+        <a href="" style="color: blue;">
+        <h5 style=" margin-left: 2px">Zarządzaj swoimi filmami</h5>
+        </a>
+
+        <a href="" style="color: blue;">
+            <h5 style=" margin-left: 2px">Usuń wszystkie swoje filmy</h5>
+        </a>
+
+        <h3 style="margin-top: 35px">Podstawowe informacje</h3>
+        <hr style="border-color: black; margin-top: 4px;">
+        <form action="" method="POST">
+            <div >
+                <label for="username">Nazwa</label><br>
+                <input type="text" name="username" id="username" value="Kanał" style="width: 370px">
+            </div>
+            <div style="margin-top: 15px">
+                <label for="channelDesc">Opis</label><br>
+                <textarea name="channelDesc" id="channelDesc" rows="5" style="width: 80%">What is Lorem Ipsum?
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</textarea>
+            </div>
+
+            <button type="submit" class="playlist-bttn" style="padding: 10px 15px; border-radius: 30px; margin-top:20px;">
+                <span style="display: inline-block; vertical-align: middle">Zapisz zmiany</span>
+            </button>
+        </form>
+
+        <h3 style="margin-top: 40px;">Zmiana hasła</h3>
+        <hr style="border-color: black; margin-top: 4px;">
+
+        <a href="/settings/changepassword" style="color: blue;">
+            <h5 style=" margin-left: 2px">Zmień hasło</h5>
+        </a>
