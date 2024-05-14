@@ -1,10 +1,21 @@
-<%- include ("layouts/header")%>
+<%- include ("../layouts/header")%>
 
 
 <div class="col" style="padding-left:0">
+
+    <div class="form-popup" id="delVidPopup" style="visibility: hidden; width: max-content; height: max-content; padding-left: 10px; padding-right: 10px;">
+        <div>
+            <span style="font-size: 25px;">Czy na pewno chcesz usunąć ten film ?</span>
+        </div>
+        <a href="/settings/mymovies">
+            <button onclick="">Usuń</button>
+        </a>
+        <button onclick="closeForm()" style="display: inline-block;">Anuluj</button>
+    </div>
+
     <div class="container-fluid p-0">
         <img src="/public/images/play_black.png" alt="arrow" height="50" width="50" style="display: inline-block;">
-        <h1 style="margin-left: 8px; display: inline-block; vertical-align: middle">Przesyłanie filmu</h1>
+        <h1 style="margin-left: 8px; display: inline-block; vertical-align: middle">Szczegóły filmu</h1>
         <hr class="upper-solid-hr" >
 
         <form action="/upload" method="POST" enctype="multipart/form-data" class=movie-form>
@@ -29,31 +40,30 @@
                 </div>
                 <div class="col-lg-auto mr-lg-auto" style="margin-left: 40px; ">
                     <div class="form-group">
-                        <label for="video">Film</label><br>
-                        <input type="file" id="video" name="video" accept="video/mp4" style="margin-left: 0" required>
-                        <span id="videoAlert" style="display: none; color: red;">Niedozwolony format pliku. Dostępny format to .mp4</span>
-                    </div>
-                    <div class="form-group">
                         <label for="thumbnail">Miniatura</label><br>
-                        <img id="imgThumbnail" width="320" height="160" style="display: none; margin-left: 0" alt="miniatura">
-                        <input type="file" id="thumbnail" name="thumbnail" accept="image/png, image/jpg"  required>
+                        <img src="/public/images/sunset-1373171_1280.jpg" id="imgThumbnail" width="320" height="160" style="display: block; margin-left: 0; margin-top: 10px;" alt="miniatura">
+                        <input type="file" id="thumbnail" name="thumbnail" accept="image/png, image/jpg" style="margin-top: 15px;" required>
                         <span id="thumbAlert" style="display: none; color: red;">Niedozwolony format pliku. Dostępne formaty to .png i .jpg</span>
                     </div>
                 </div>
             </div>
             <div>
-                <button type="submit">Opublikuj</button>
+                <button type="submit">Zapisz zmiany</button>
             </div>
         </form>
 
+        <button onclick="openForm()" class="del-vid-bttn" style="margin-left: 30px; margin-top: 30px;">
+            USUŃ FILM
+        </button>
+
+
         <script>
             const imgInput = document.getElementById("thumbnail");
-            const videoInput = document.getElementById("video");
 
-            function showThumbnail(file) {
+            function changeThumbnail(file) {
                 const image = document.getElementById("imgThumbnail");
                 image.src = URL.createObjectURL(file);
-                image.style.display = "block";
+                //image.style.display = "block";
             }
 
 
@@ -68,9 +78,11 @@
                     input.value = null;
                     const alert = document.getElementById(alertId);
                     alert.style.display = "block";
-
+                    //przywraca aktualny
+                    const image = document.getElementById("imgThumbnail");
+                    image.src = "/public/images/sunset-1373171_1280.jpg";
                 } else {
-                    if(inputId === "thumbnail") showThumbnail(file);
+                    changeThumbnail(file);
                     const alert = document.getElementById(alertId);
                     alert.style.display = "none";
                 }
@@ -79,9 +91,19 @@
             }
 
             imgInput.addEventListener( "change", () => fileValidation(imgInput.id, "thumbAlert", ['png', 'jpg', 'jpeg'], ['image/png', 'image/jpg']) );
-            videoInput.addEventListener( "change", () => fileValidation(videoInput.id, "videoAlert", ['mp4'], ['video/mp4']) );
+
+            function openForm() {
+                const formPopup = document.getElementById("delVidPopup");
+
+                formPopup.style.visibility = "visible";
+                console.log("popup");
+            }
+
+            function closeForm() {
+                document.getElementById("delVidPopup").style.visibility = "hidden";
+            }
 
         </script>
 
 
-<%- include ("layouts/footer")%>
+        <%- include ("../layouts/footer")%>

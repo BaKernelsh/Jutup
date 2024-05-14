@@ -62,3 +62,27 @@ li{
 .topnav-sp35 {
     width: 35px;
 }
+
+.settings-h5 {
+    color: blue;
+    cursor: pointer;
+    width: max-content;
+}
+
+/*.settings-h5.h5:hover {
+    cursor: pointer;
+}*/
+
+.channel-menu {
+    visibility: hidden;
+    z-index: 3000;
+    position: absolute;
+    right: 2%;
+    top: 8%;
+    border-radius: 5px;
+    background-color: #d3d1ca;
+    height: max-content;
+    width: max-content;
+    font-size: 20px;
+    padding: 10px;
+}

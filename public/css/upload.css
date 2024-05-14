@@ -40,3 +40,28 @@
 .movie-form button[type="submit"]:hover {
     background-color: #333333;
 }
+
+.categ-select {
+    width: 200px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid black;
+
+}
+
+.categ-select {
+    width: 200px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid black;
+
+}
+
+.del-vid-bttn {
+    border: 2px solid red;
+    color: red;
+    background-color: white;
+    width: 150px;
+    height: 40px;
+    font-weight: bold;
+}

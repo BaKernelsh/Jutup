@@ -6,12 +6,19 @@
 }
 
 .form-popup {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    top: 0;
-    right: 0;
-    left: 0;
+    /*display: none;*/
+    position: absolute;
+    bottom: 70%;
+    top: 30%;
+    right: 66%;
+    left: 34%;
     border: 3px solid #f1f1f1;
     z-index: 999;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.form-popup-close {
+    border: none;
+    padding: 0;
 }

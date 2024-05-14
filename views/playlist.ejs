@@ -1,10 +1,23 @@
 <%- include ("layouts/header")%>
 
-<div class="col" style="border: 1px solid black;">
+<div class="col">
+
+    <div class="form-popup" id="chngPlistNm" style="visibility: hidden; width: max-content; height: max-content; padding-left: 10px; padding-right: 10px;">
+        <div>
+            <span style="font-size: 25px;">Wpisz nową nazwę dla playlisty</span>
+            <button onclick="closeForm()" class="form-popup-close ml-1" style="display: inline-block; vertical-align: middle;">
+                <img src="/public/images/closeX.png" alt="close popup" width="20" height="20">
+            </button>
+        </div>
+        <form action="javascript:;" onsubmit="changePlName()">
+            <input type="text" name="PlistName" id="PlistName" style="width: 100%; margin-top: 9px;" required>
+        </form>
+    </div>
+
     <div class="container-fluid p-0" >
         <div class="channel-banner" style="display: flex; align-items: center;">
-            <h1 style="margin-left: 16px; font-size: 60px">Playlista 1</h1>
-            <button onclick="openForm" style="display: inline-block; vertical-align: middle; margin-left: 15px; border: none">
+            <h1 id="PlName" style="margin-left: 16px; font-size: 60px">Playlista 1</h1>
+            <button onclick="openForm()" style="display: inline-block; vertical-align: middle; margin-left: 15px; border: none">
                 <img src="/public/images/change.png" alt="change playlists name" height="30" width="30">
             </button>
         </div>
@@ -49,31 +62,24 @@
 
         </div>
 
-        <div class="form-popup" id="chngPlistNm" >
-            <form>
-                <h3>Wprowadź nową nazwę dla playlisty</h3>
-                <button onclick="closeForm" style="display: inline-block; vertical-align: center;">
-                    <img src="/public/images/closeX.png" alt="close popup" width="10" height="10">
-                </button>
-                <input type="text" name="PlistName" id="PlistName">
-            </form>
-        </div>
+
 
         <script>
             function openForm() {
                 const formPopup = document.getElementById("chngPlistNm");
-                // Calculate the position to center the form
-                const topPosition = (window.innerHeight - formPopup.offsetHeight) / 2;
-                const leftPosition = (window.innerWidth - formPopup.offsetWidth) / 2;
-                // Set the position of the form
-                formPopup.style.top = topPosition + "px";
-                formPopup.style.left = leftPosition + "px";
-                // Display the form
-                formPopup.style.display = "flex";
 
+                formPopup.style.visibility = "visible";
+                console.log("popup");
+            }
 
-                function closeForm() {
-                document.getElementById("chngPlistNm").style.display = "none";
+            function closeForm() {
+                document.getElementById("chngPlistNm").style.visibility = "hidden";
+                document.getElementById("PlistName").value = "";
+            }
+
+            function changePlName() {
+                document.getElementById("PlName").innerHTML = document.getElementById("PlistName").value;
+                closeForm();
             }
         </script>
 

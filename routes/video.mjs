@@ -11,8 +11,12 @@ router.get("/upload", (req, res) => {
     }
 });
 
+router.post("/upload", (req, res) => {
+    res.redirect("/video");
+})
+
 router.get("/video", (req, res) => {
-    res.render("videoPage", {isLoggedIn: false});
+    res.render("videoPage", {isLoggedIn: req.session.user_id ? true : false});
 });
 
 export default router;

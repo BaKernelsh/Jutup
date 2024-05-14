@@ -1,0 +1,38 @@
+<%- include ("../layouts/header")%>
+
+<div class="col">
+    <div class="container-fluid p-0">
+        <img src="/public/images/play_black.png" alt="settings" width="50" height="50" style="margin-left: 0">
+        <h1 style="display: inline-block; vertical-align: middle;">Moje filmy</h1>
+        <hr style="border-color: black; margin-top: 4px;">
+
+        <a href="" style="color: blue;">
+            <h5 style=" margin-left: 2px; margin-bottom: 15px">Usuń wszystkie swoje filmy</h5>
+        </a>
+        <hr style="border-color: black; margin-top: 4px; margin-bottom: 9px">
+
+        <div class="row justify-content-end" style="padding-right: 1px" >
+            <div style="width: max-content; padding-left: 15px; padding-right: 15px">
+                Data przesłania
+            </div>
+            <div style="width: max-content; padding-left: 15px; padding-right: 15px">
+                Wyświetlenia
+            </div>
+            <div style="width: max-content; padding-left: 15px; padding-right: 15px">
+                Komentarze
+            </div>
+            <div style="width: max-content; padding-left: 15px; padding-right: 15px">
+                Średnia ocen
+            </div>
+        </div>
+        <hr style="border-color: black; margin-top: 9px;">
+
+        <div class="container-fluid pt-0" >
+            <%- include ("../thumbnails/myMoviesRow") %>
+            <%- include ("../thumbnails/myMoviesRow") %>
+            <%- include ("../thumbnails/myMoviesRow") %>
+            <%- include ("../thumbnails/myMoviesRow") %>
+            <%- include ("../thumbnails/myMoviesRow") %>
+        </div>
+
+<%- include ("../layouts/footer")%>

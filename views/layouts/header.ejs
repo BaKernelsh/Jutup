@@ -13,11 +13,39 @@
         <link rel=stylesheet" type="text/css" href="/public/css/simple-sidebar.css">
         <link rel="stylesheet" type="text/css" href="/public/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <script>
+            function openChannelMenu() {
+                document.getElementById("channelMenu").style.visibility = "visible";
+            }
+
+            document.addEventListener("click", (event) => {
+                const channelMenu = document.getElementById("channelMenu");
+                const channelIcon = document.getElementById("channelIcon");
+
+                if(!channelMenu.contains(event.target) && !channelIcon.contains(event.target) ){
+                    channelMenu.style.visibility = "hidden";
+                }
+            });
+        </script>
     </head>
 
     <body>
 
-    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top" style="border: 1px solid red; ">
+    <div id="channelMenu" class="channel-menu">
+        <a href="/channel/own">
+            <div>
+                Mój kanał
+            </div>
+        </a>
+        <a href="/logout">
+            <div>
+                Wyloguj
+            </div>
+        </a>
+    </div>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
         <div class="container-fluid ml-0 mr-0 p-0" >
             <!-- Logo -->
             <a class="navbar-brand mr-auto pl-0"  href="/">
@@ -44,8 +72,8 @@
                 </li>
                 <li class="nav-item">
                     <% if(isLoggedIn){ %>
-                    <a class="nav-link" href="/channel/own">
-                        <img src="/public/images/Useravatar.png" alt="home" width="50" height="50">
+                    <a id="channelIcon" class="nav-link">
+                        <img onclick="openChannelMenu()" src="/public/images/Useravatar.png" alt="home" width="50" height="50">
                     </a>
                     <% } else{ %>
                     <a class="nav-link" href="/login">
@@ -59,10 +87,10 @@
 
 
 
-    <div class="container-fluid" style="border: 1px solid black; padding-top: 30px;">
+    <div class="container-fluid" style="padding-top: 30px;">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-lg-auto  bg-light " style="height: 100vh; width:200px; border: 1px solid black; padding: 0">
+            <div class="col-lg-auto  bg-light " style="height: 100vh; width:200px; padding: 0">
                 <div class="d-flex flex-column justify-content-start position-fixed" style="height: 100%;">
                     <!-- Sidebar content -->
                     <a class="sidebar-a" href="/">
