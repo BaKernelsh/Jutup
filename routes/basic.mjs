@@ -21,7 +21,9 @@ router.post("/login", async (req, res) => {
         if(user) {
             bcrypt.compare(req.body.password, user.password, (error, isVerified) => {
                 if(isVerified){
+                    //console.log(user._id);
                     req.session.user_id = user._id;
+                    console.log(req.session.user_id)
                     res.redirect("/");
                 }else {
                     res.render("login", { message: "Nieprawidłowe hasło.", email: user.email });
@@ -50,7 +52,7 @@ router.post("/register", async (req, res) => {
                     "username": req.body.username,
                     "email": req.body.email,
                     "password": hash,
-                    "coverPhoto": "",
+                    "coverPhoto": "public/images/userAvatarChannel.png",
                     "image": "",
                     "subscribers": 0,
                     "subscriptions": [],
