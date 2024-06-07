@@ -17,8 +17,8 @@
             </a>
             <div style="float: left; margin-left: 6px">
                 <a href="/channel"> <b><%= sender.username %></b> </a><br>
-                <img src="/public/images/heart_unfilled.png" alt="from subscribers" width="20" height="20">
-                <span style="font-weight: bold; font-size: 20px; vertical-align: middle">Subskrybuj</span>
+                <img src="/public/images/heart_unfilled.png" alt="from subscribers" width="20" height="20" onclick=subscribeOrUnsubscribe()>
+                <span style="font-weight: bold; font-size: 20px; vertical-align: middle" onclick=subscribeOrUnsubscribe()>Subskrybuj</span>
             </div>
             <div class="ml-auto">
                 <span class="fa fa-star <% if(avgRating >=1){%>checked<%}%> fa-2x" onclick=rateVideo(1)></span>
@@ -46,15 +46,7 @@
             <%- include ("comment") %>
             <%- include ("comment") %>
 
-<!--            <div class="comments">
-                <div class="comment">
-                    <strong>User 1:</strong> This is a great video!
-                </div>
-                <div class="comment">
-                    <strong>User 2:</strong> I agree, very informative.
-                </div>
-                &lt;!&ndash; Add more comments dynamically using JavaScript &ndash;&gt;
-            </div>
+
 
             <div class="comment-form">
                 <h3>Add Your Comment</h3>
@@ -79,6 +71,20 @@
                         rating: rating
                     })
                 })
+            }
+
+            async function subscribeOrUnsubscribe() {
+                const senderId = '<%= sender.id %>';
+                console.log(senderId);
+                await fetch("/subscribe", {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        useridtosubscribe: senderId
+                    })
+                });
             }
         </script>
 

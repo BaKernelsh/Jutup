@@ -7,59 +7,59 @@
                 <div class="row d-flex justify-content-between justify-content-end">
 
                     <div class="col-lg-auto mt-auto" style="margin-left: 40px; ">
-                        <a href="/video">
-                        <img src="/public/images/sunset-1373171_1280.jpg" alt="secondbestvideo" width="460" height="255"  style="border-radius: 12px">
+                        <a href="/video?videoid=<%= topThreeVideos[1]._id %>">
+                        <img src="<%= topThreeVideos[1].thumbnail_path %>" alt="secondbestvideo" width="460" height="255"  style="border-radius: 12px; ">
                         <div class="row" style="margin-top: 8px; margin-left: 0">
-                            <img src="/public/images/Useravatar.png" alt="useravatar" width="45" height="45">
+                            <img src="<%= topThreeVideos[1].senderAvatarPath %>" alt="useravatar" width="45" height="45">
                             <div style="float: left">
-                                <b>Najlepszy film 2</b> <br>
-                                Nazwa kanału
+                                <b><%= topThreeVideos[1].title %></b> <br>
+                                <%= topThreeVideos[1].senderUsername %>
                             </div>
                             <div style="margin-left: 125px">
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[1].avg_rating >=1){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[1].avg_rating >=2){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[1].avg_rating >=3){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[1].avg_rating >=4){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[1].avg_rating >=5){%>checked<%}%> fa-2x"></span>
                             </div>
                         </div>
                         </a>
                     </div>
 
                     <div class="col-lg-auto mt-auto" style="margin-left: 40px; ">
-                        <a href="/video">
-                        <img src="/public/images/sunset-1373171_1280.jpg" alt="firstbestvideo" width="475" height="275" style="border-radius: 12px">
+                        <a href="/video?videoid=<%= topThreeVideos[0]._id %>">
+                        <img src="<%= topThreeVideos[0].thumbnail_path %>" alt="firstbestvideo" width="475" height="275" style="border-radius: 12px">
                         <div class="row" style="margin-top: 8px; margin-left: 0">
-                            <img src="/public/images/Useravatar.png" alt="useravatar" width="45" height="45">
+                            <img src="<%= topThreeVideos[0].senderAvatarPath %>" alt="useravatar" width="45" height="45">
                             <div style="float: left">
-                                <b>Najlepszy film 1</b> <br>
-                                Nazwa kanału
+                                <b><%= topThreeVideos[0].title %></b> <br>
+                                <%= topThreeVideos[0].senderUsername %>
                             </div>
                             <div style="margin-left: 140px">
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[0].avg_rating >=1){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[0].avg_rating >=2){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[0].avg_rating >=3){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[0].avg_rating >=4){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[0].avg_rating >=5){%>checked<%}%> fa-2x"></span>
                             </div>
                         </div>
                         </a>
                     </div>
                     <div class="col-lg-auto mt-auto" style="margin-left: 40px; ">
-                        <a href="/video">
-                        <img src="/public/images/sunset-1373171_1280.jpg" alt="thirdbestvideo" width="440" height="230" style="border-radius: 12px">
+                        <a href="/video?videoid=<%= topThreeVideos[2]._id %>">
+                        <img src="<%= topThreeVideos[2].thumbnail_path %>" alt="thirdbestvideo" width="440" height="230" style="border-radius: 12px">
                         <div class="row" style="margin-top: 8px; margin-left: 0">
-                            <img src="/public/images/Useravatar.png" alt="useravatar" width="45" height="45">
+                            <img src="<%= topThreeVideos[2].senderAvatarPath %>" alt="useravatar" width="45" height="45">
                             <div style="float: left">
-                                <b>Najlepszy film 3</b> <br>
-                                Nazwa kanału
+                                <b><%= topThreeVideos[2].title %></b> <br>
+                                <%= topThreeVideos[0].senderUsername %>
                             </div>
                             <div style="margin-left: 105px">
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star checked fa-2x"></span>
-                                <span class="fa fa-star fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[2].avg_rating >=1){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[2].avg_rating >=2){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[2].avg_rating >=3){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[2].avg_rating >=4){%>checked<%}%> fa-2x"></span>
+                                <span class="fa fa-star <% if(topThreeVideos[2].avg_rating >=5){%>checked<%}%> fa-2x"></span>
                             </div>
                         </div>
                         </a>
@@ -70,14 +70,64 @@
                 <img src="/public/images/HeartStraight.png" alt="from subscribers" width="60" height="60" style="display: inline-block;">
                 <h1 style="display: inline-block; vertical-align: middle;">Nowości z subskrybowanych kanałów</h1>
                 <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:35px">
-                     <%- include ("thumbnails/movieOnMain")%>
-                     <%- include ("thumbnails/movieOnMain")%>
-                     <%- include ("thumbnails/movieOnMain")%>
-                     <%- include ("thumbnails/movieOnMain")%>
+                     <% fourFromSubs.forEach(video => { %>
+                    <div class="col-lg-auto mt-auto" style="margin-left: 40px; ">
+                        <a href="/video?videoid=<%= video._id %>">
+                            <img src="<%= video.thumbnail_path %>" alt="popularFormSubscribed" width="320" height="160" style="border-radius: 12px">
+                        </a>
+                        <div class="row" style="margin-top: 8px; margin-left: 0">
+                            <a href="/channel"><img src="<%= video.senderAvatarPath %>" alt="useravatar" width="45" height="45"></a>
+                            <div style="float: left">
+                                <a href="/video?videoid=<%= video._id %>"><b><%= video.title %></b></a> <br>
+                                <a href="/channel"><%= video.senderUsername %></a>
+                            </div>
+                            <a href="/video?videoid=<%= video._id %>">
+                                <div style="margin-left: 57px">
+                                    <span class="fa fa-star <% if(video.avg_rating >=1){%>checked<%}%> fa-lg"></span>
+                                    <span class="fa fa-star <% if(video.avg_rating >=2){%>checked<%}%> fa-lg"></span>
+                                    <span class="fa fa-star <% if(video.avg_rating >=3){%>checked<%}%> fa-lg"></span>
+                                    <span class="fa fa-star <% if(video.avg_rating >=4){%>checked<%}%> fa-lg"></span>
+                                    <span class="fa fa-star <% if(video.avg_rating >=5){%>checked<%}%> fa-lg"></span>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <% }) %>
                 </div>
                 <% } %>
                 <h1>Nowe popularne filmy</h1>
                 <div class="row justify-content-between" style="padding-top: 13px">
+                    <% twentyPopular.forEach(video => { %>
+                        <div class="col-lg-auto mt-auto" style="margin-left: 40px; ">
+                            <a href="/video?videoid=<%= video._id %>">
+                                <img src="<%= video.thumbnail_path %>" alt="popular" width="320" height="160" style="border-radius: 12px">
+                            </a>
+                            <div class="row" style="margin-top: 8px; margin-left: 0">
+                                <a href="/channel"><img src="<%= video.senderAvatarPath %>" alt="useravatar" width="45" height="45"></a>
+                                <div style="float: left">
+                                    <a href="/video?videoid=<%= video._id %>"><b><%= video.title %></b></a> <br>
+                                    <a href="/channel"><%= video.senderUsername %></a>
+                                </div>
+                                <a href="/video?videoid=<%= video._id %>">
+                                    <div style="margin-left: 57px">
+                                        <span class="fa fa-star <% if(video.avg_rating >=1){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=2){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=3){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=4){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=5){%>checked<%}%> fa-lg"></span>
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+                    <% }) %>
+                   <!-- <%- include ("thumbnails/movieOnMain")%>
+                    <%- include ("thumbnails/movieOnMain")%>
+                    <%- include ("thumbnails/movieOnMain")%>
+                    <%- include ("thumbnails/movieOnMain")%>-->
+                </div>
+                <!--<div class="row justify-content-between" style="padding-top: 13px">
                     <%- include ("thumbnails/movieOnMain")%>
                     <%- include ("thumbnails/movieOnMain")%>
                     <%- include ("thumbnails/movieOnMain")%>
@@ -88,13 +138,7 @@
                     <%- include ("thumbnails/movieOnMain")%>
                     <%- include ("thumbnails/movieOnMain")%>
                     <%- include ("thumbnails/movieOnMain")%>
-                </div>
-                <div class="row justify-content-between" style="padding-top: 13px">
-                    <%- include ("thumbnails/movieOnMain")%>
-                    <%- include ("thumbnails/movieOnMain")%>
-                    <%- include ("thumbnails/movieOnMain")%>
-                    <%- include ("thumbnails/movieOnMain")%>
-                </div>
+                </div>-->
                 <%- include ("layouts/footer")%>
 
 

@@ -51,6 +51,7 @@ router.get("/video", async(req, res) => {
         res.redirect("/");
     }
     else{
+        console.log(videoAndUser.videoSender._id);
         res.render("videoPage", {
             isLoggedIn: req.session.user_id ? true : false,
             videoPath: videoAndUser.video.video_path,
@@ -62,8 +63,10 @@ router.get("/video", async(req, res) => {
             sender: {
                 username: videoAndUser.videoSender.username,
                 avatar: videoAndUser.videoSender.coverPhoto,
+                id: videoAndUser.videoSender._id,
             }
         });
+        await VideoService.updateVideoViewCount(videoId);
     }
 
 
