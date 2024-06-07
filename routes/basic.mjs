@@ -1,11 +1,36 @@
 import express from "express";
 import db from "../database/conn.mjs";
 import bcrypt from "bcrypt";
+import VideoService from "../services/videoService.mjs";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("index", {isLoggedIn: req.session.user_id ? true : false });
+router.get("/", async(req, res) => {
+
+    let topThreeVideos, xLastHours=4; //TODO kiedy jest 0 filmów w bazie
+    do{
+        topThreeVideos = await VideoService.getTopThreeVideos(xLastHours);
+        xLastHours += 4;
+    }while(topThreeVideos.length < 3)
+
+    let twentyPopular = await VideoService.get20Popular(10);
+
+    if(req.session.user_id) {
+        let fourFromSubs = await VideoService.get4FromSubscribed(req.session.user_id);
+        res.render("index", {
+            isLoggedIn: req.session.user_id ? true : false,
+            topThreeVideos: topThreeVideos,
+            twentyPopular: twentyPopular,
+            fourFromSubs: fourFromSubs,
+        });
+    }else {
+        res.render("index", {
+            isLoggedIn: req.session.user_id ? true : false,
+            topThreeVideos: topThreeVideos,
+            twentyPopular: twentyPopular,
+            fourFromSubs: [],
+        });
+    }
 })
 
 router.get("/login", (req, res) => {

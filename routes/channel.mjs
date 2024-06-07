@@ -1,5 +1,6 @@
 import express from "express";
 import db from "../database/conn.mjs";
+import UserService from "../services/userService.mjs";
 
 
 const router = express.Router();
@@ -41,6 +42,16 @@ router.get("/settings/moviedetails", (req, res) => {
     res.render("settings/movieDetails", {isLoggedIn: true})
 })
 
+router.patch("/subscribe", async(req, res) => {
+   if(req.session.user_id){
+       const userIdToSubscribe = req.body.useridtosubscribe;
+       console.log(req.body.useridtosubscribe);
+       console.log("subskrybowanie");
+       if(userIdToSubscribe) {
+           await UserService.subscribeOrUnsubscribe(req.session.user_id, userIdToSubscribe);
+       }
+   }
+});
 
 
 export default router;
