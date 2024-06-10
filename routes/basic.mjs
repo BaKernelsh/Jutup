@@ -113,8 +113,11 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 })
 
-router.get("/help", (req, res) => {
-    res.render("help", {isLoggedIn: req.session.user_id ? true : false })
+router.get("/help", async(req, res) => {
+    res.render("help", {
+        isLoggedIn: req.session.user_id ? true : false,
+        user: await UserService.getUser(req.session.user_id),
+    })
 })
 
 export default router;
