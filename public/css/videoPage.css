@@ -45,4 +45,41 @@ video {
 
 }
 
+.playlist-ended {
+    visibility: hidden;
+    z-index: 3000;
+    position: absolute;
+    bottom: 70%;
+    top: 30%;
+    right: 66%;
+    left: 34%;
+    border-radius: 5px;
+    background-color: #d3d1ca;
+    height: max-content;
+    width: max-content;
+    font-size: 20px;
+    padding: 10px;
+}
 
+.playlist-list {
+    visibility: hidden;
+    z-index: 3500;
+    position: absolute;
+    bottom: 70%;
+    top: 30%;
+    right: 66%;
+    left: 34%;
+    width: 300px;
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    background-color: #d3d1ca;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.playlist-list-item {
+    color: black;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}

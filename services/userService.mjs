@@ -15,46 +15,76 @@ const getUser = async (userId) => {
     }
 };
 
+const getUserByUsername = async (username) => {
+    try{
+        const user = await db.collection("users").findOne({
+            "username": username
+        });
+        //console.log("user z getUserByUsername: "); console.log(user);
+        return user;
+    }catch(error){
+        console.log("nie pobralo usera: ", error.message);
+        throw error;
+    }
+}
+
 
 const subscribeOrUnsubscribe = async(userId, userIdToSubscribe) => {
     try {
+        //console.log(userId);
         if(userId === userIdToSubscribe){ return; }
         console.log("nie takie same");
         const user = await getUser(userId);
-        console.log(user);
-        //const subscriptions = user.subscriptions;
-        const index = user.subscriptions.findIndex(sub => new ObjectId(sub) === new ObjectId(userIdToSubscribe));
+        //console.log(user);
+        let updateDoc;
+        //let subscribed;
+        const index = user.subscriptions.findIndex(sub => sub.toString() === userIdToSubscribe);
         if(index !== -1){
-            console.log("juz jest");
-            user.subscriptions.toSpliced(index,1);
-            /*await db.collection("users").updateOne({
-                    "_id": userId
-                },
-                { $pull: {subscriptions: new ObjectId(userIdToSubscribe)} }
-            );*/
+            //console.log("juz jest");
+            updateDoc = { $pull: {subscriptions: new ObjectId(userIdToSubscribe)} };
+            //subscribe
         } else{
-            user.subscriptions.push(userIdToSubscribe);
-            console.log("jeszcze nie ma")
-            /*await db.collection("users").updateOne({
-                    "_id": userId
-                },
-                { $push: {subscriptions: new ObjectId(userIdToSubscribe)} }
-            );*/
+            //console.log("jeszcze nie ma")
+            updateDoc = { $push: {subscriptions: new ObjectId(userIdToSubscribe)} };
         }
 
         await db.collection("users").updateOne({
-                "_id": userId
+                "_id": new ObjectId(userId)
             },
-            { $set: {subscriptions: user.subscriptions} }
+            updateDoc
         );
+
 
     }catch (error){
         console.log(error.message);
+        throw new Error("Error in sub");
     }
+}
+//subscribeR: String | ObjectId, subscribeD: String | ObjectId
+const subscribesTo = async(subscribeR, subscribeD) => {
+    let subscribeDString;
+    if(typeof subscribeD === "string"){
+        subscribeDString = subscribeD;
+    }else{
+        subscribeDString = subscribeD.toString();
+    }
+
+    let subscribeRString;
+    if(typeof subscribeR === "string"){
+        subscribeRString = subscribeR;
+    }else{
+        subscribeRString = subscribeR.toString();
+    }
+
+    const user = await getUser(subscribeRString);
+
+    return user.subscriptions.findIndex(sub => sub.toString() === subscribeDString) === -1 ? false : true;
 }
 
 
 export default {
     getUser,
+    getUserByUsername,
     subscribeOrUnsubscribe,
+    subscribesTo,
 };

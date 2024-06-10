@@ -7,22 +7,32 @@
         </div>
 
         <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:10px; margin-left: 10%; margin-right: 10%;">
+            <% playlists.forEach(playlist => { %>
+                <div >
+                    <a href="/playlist?playlistid=<%= playlist._id %>">
+                        <img src="../<%= playlist.thumbnail_path %>" alt="<%= playlist.playlistName %>" width="320" height="160" style="border-radius: 12px">
+                    </a>
+                    <div style="margin-top: 4px; display: flex;  justify-content: space-between; ">
+                        <div style="max-width: 160px; word-wrap: break-word; margin-left:10px">
+                            <a href="/playlist?playlistid=<%= playlist._id %>">
+                                <% if(playlist.playlistName.length <=37){ %>
+                                    <b><%= playlist.playlistName %> </b>
+                                <% } else { %>
+                                    <b><%= playlist.playlistName.slice(0,37).padEnd(40,".") %> </b>
+                                <% } %>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            <% }) %>
+            <!--<%- include("thumbnails/playlistThumbnail") %>
             <%- include("thumbnails/playlistThumbnail") %>
             <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
+            <%- include("thumbnails/playlistThumbnail") %>-->
         </div>
-        <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:10px; margin-left: 10%; margin-right: 10%;">
-            <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
-        </div>
-        <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:10px; margin-left: 10%; margin-right: 10%;">
-            <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
-            <%- include("thumbnails/playlistThumbnail") %>
-        </div>
+
 
 <%- include ("layouts/footer")%>
