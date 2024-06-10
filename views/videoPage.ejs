@@ -4,7 +4,7 @@
 <!-- Main content -->
 <div class="col" style="padding-left:200px;">
     <div class="container-fluid p-0" >
-        <h1 style="margin-bottom: 6px"><%= title %></h1>
+        <h1 style="margin-bottom: 6px; max-width: 900px; word-wrap: break-word;"><%= title %></h1>
 
             <video  controls>
                 <source src="<%= videoPath %>" type="video/mp4">
@@ -17,15 +17,23 @@
             </a>
             <div style="float: left; margin-left: 6px">
                 <a href="/channel"> <b><%= sender.username %></b> </a><br>
-                <img src="/public/images/heart_unfilled.png" alt="from subscribers" width="20" height="20" onclick=subscribeOrUnsubscribe()>
-                <span style="font-weight: bold; font-size: 20px; vertical-align: middle" onclick=subscribeOrUnsubscribe()>Subskrybuj</span>
+                <% if(!sender.isCurrentUser) { %>
+                <img id="subHeart" src="<% if(!sender.subscribed){%>/public/images/heart_unfilled.png<% } else { %>/public/images/HeartStraight.png<% } %>"
+                     alt="from subscribers" width="20" height="20" onclick=subscribeOrUnsubscribe() style="cursor: pointer;">
+                <span style="font-weight: bold; font-size: 20px; vertical-align: middle; cursor:pointer;" onclick=subscribeOrUnsubscribe()>Subskrybuj</span>
+                <% } %>
             </div>
+            <% if(isLoggedIn) { %>
+            <div style="margin-left: auto; cursor: pointer;" onclick=showPlaylistList()>
+                <img src="/public/images/playlist_bttn.png" alt="add to playlist" width="35" height="35" onclick=showPlaylistList()>
+            </div>
+            <% } %>
             <div class="ml-auto">
-                <span class="fa fa-star <% if(avgRating >=1){%>checked<%}%> fa-2x" onclick=rateVideo(1)></span>
-                <span class="fa fa-star <% if(avgRating >=2){%>checked<%}%> fa-2x" onclick=rateVideo(2)></span>
-                <span class="fa fa-star <% if(avgRating >=3){%>checked<%}%> fa-2x" onclick=rateVideo(3)></span>
-                <span class="fa fa-star <% if(avgRating >=4){%>checked<%}%> fa-2x" onclick=rateVideo(4)></span>
-                <span class="fa fa-star <% if(avgRating >=5){%>checked<%}%> fa-2x" onclick=rateVideo(5)></span>
+                <span class="fa fa-star <% if(avgRating >=1){%>checked<%}%> fa-2x" onclick=rateVideo(1) style="cursor: pointer;"></span>
+                <span class="fa fa-star <% if(avgRating >=2){%>checked<%}%> fa-2x" onclick=rateVideo(2) style="cursor: pointer;"></span>
+                <span class="fa fa-star <% if(avgRating >=3){%>checked<%}%> fa-2x" onclick=rateVideo(3) style="cursor: pointer;"></span>
+                <span class="fa fa-star <% if(avgRating >=4){%>checked<%}%> fa-2x" onclick=rateVideo(4) style="cursor: pointer;"></span>
+                <span class="fa fa-star <% if(avgRating >=5){%>checked<%}%> fa-2x" onclick=rateVideo(5) style="cursor: pointer;"></span>
             </div>
         </div>
 
@@ -56,35 +64,126 @@
                     <button type="submit">Submit</button>
                 </form>
             </div>
+
         </div>-->
 
-        <script>
-            async function rateVideo(rating) {
-                const videoId = new URLSearchParams(window.location.search).get("videoid");
-                await fetch("/rate_video", {
+        <% if(isLoggedIn) { %>
+        <div id="playlistList" class="playlist-list">
+            <% userPlaylists.forEach(playlist => { %>
+                <div class="playlist-list-item" onclick=addToPlaylist(<%= playlist._id %>)>
+                    <% playlist.playlistName %>
+                </div>
+            <% }) %>
+        </div>
+        <% } %>
+
+        <div id="playlistEnded" class="playlist-ended">
+            <span>Koniec playlisty</span>
+            <button onclick="goToFirst()">
+                <img src="/public/images/replay-button.png" alt="replay" width="100" height="100">
+            </button>
+        </div>
+
+
+        <script> //playlisty
+            const searchParams = new URLSearchParams(window.location.search);
+            const playlistId = searchParams.get("playlistid")
+            const playlistIndex = searchParams.get("playlistindex");
+            const video = document.querySelector("video");
+            video.onended = (event) => {    //na zakończenie filmu
+                if(!playlistIndex || !playlistId){
+                    return;
+                }
+
+                if("<%= lastInPlaylist %>" === "false") {
+                    console.log("<%= lastInPlaylist %>");
+                    window.location.assign(`/video?playlistid=${playlistId}&playlistindex=${Number(playlistIndex) + 1}`);
+                }
+                else{
+                    document.getElementById("playlistEnded").style.visibility = "visible";
+                }
+            }
+
+            function showPlaylistList() {
+                document.getElementById("playlistList").style.visibility = "visible";
+            }
+
+            async function addToPlaylist(playlistToAddId) {
+                await fetch(`/addToPlaylist/${playlistToAddId}`,{
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        videoId: videoId,
-                        rating: rating
+                        "videoId": "<%= videoId %>"
                     })
                 })
             }
 
+            function goToFirst() {
+                window.location.assign(`/video?playlistid=${playlistId}&playlistindex=0`);
+            }
+
+            document.addEventListener("click", (event) => { //zamknięcie okna z info o koncu playlisty lub listy playlist
+                const playlistEndedWindow = document.getElementById("playlistEnded");
+                const playlistList = document.getElementById("playlistList");
+
+                if(!playlistEndedWindow.contains(event.target)){
+                    playlistEndedWindow.style.visibility = "hidden";
+                }
+                /*if(!playlistList.contains(event.target) && playlistList.style.visibility==="visible"){
+                    playlistList.style.visibility = "hidden";
+                }*/
+            });
+        </script>
+
+        <script> //ocenianie i subskrybcje
+
+            async function rateVideo(rating) {
+                try {
+                    const videoId = new URLSearchParams(window.location.search).get("videoid");
+                    await fetch("/rate_video", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            videoId: videoId,
+                            rating: rating
+                        })
+                    })
+                }catch(error){
+                    //TODO okno z błędem
+                }
+            }
+
             async function subscribeOrUnsubscribe() {
                 const senderId = '<%= sender.id %>';
-                console.log(senderId);
-                await fetch("/subscribe", {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        useridtosubscribe: senderId
-                    })
-                });
+                try {
+                    const res = await fetch("/subscribe", {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            useridtosubscribe: senderId
+                        })
+                    });
+
+                    if (!res.ok) {
+                        throw new Error;
+                    }
+
+                    /*var subHeart = */document.getElementById("subHeart").src = "/public/images/HeartStraight.png";
+                    //subHeart.src = "/public/images/HeartStraight.png";
+                    console.log(subHeart.src);
+                    //subHeart.src = subHeart.src.includes("heart_unfilled.png") ? "/public/images/HeartStraight.png" : "/public/images/heart_unfilled.png";
+
+
+                }catch(error){
+                    //TODO okno z błędem
+                    console.log("sub error");
+                }
             }
         </script>
 

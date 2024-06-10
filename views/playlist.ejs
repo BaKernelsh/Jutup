@@ -16,14 +16,16 @@
 
     <div class="container-fluid p-0" >
         <div class="channel-banner" style="display: flex; align-items: center;">
-            <h1 id="PlName" style="margin-left: 16px; font-size: 60px">Playlista 1</h1>
+            <h1 id="PlName" style="margin-left: 16px; font-size: 60px"><%= playlist.playlistName%></h1>
+            <% if(own) { %>
             <button onclick="openForm()" style="display: inline-block; vertical-align: middle; margin-left: 15px; border: none">
                 <img src="/public/images/change.png" alt="change playlists name" height="30" width="30">
             </button>
+            <% } %>
         </div>
 
         <div class="row align-items-center" style="margin-left: 10%; margin-right: 10%; margin-bottom: 20px;">
-            <h4>Zawiera 123 filmy</h4>
+            <h4>Zawiera <%= playlist.videos.length %> filmy</h4>
 
             <button class="playlist-bttn" style="padding: 10px 15px; border-radius: 30px; margin-left: 2%">
                 <img src="/public/images/play-256.png" alt="Odtwórz wszystkie" width="25" height="25">
@@ -34,32 +36,53 @@
                 <img src="/public/images/shuffle_playlist.png" alt="Odtwórz losowo" width="25" height="25">
                 <span style="display: inline-block; vertical-align: middle">Losowa kolejność</span>
             </button>
-
+            <% if(own) { %>
             <a class="ml-auto" href="/playlists" style="margin-right: 2px">
                 <img src="/public/images/trash.png" alt="delete playlist" width="25" height="25">
             </a>
+            <% } %>
         </div>
 
         <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:15px; margin-left: 10%; margin-right: 10%;">
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-
-        </div>
-        <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:15px; margin-left: 10%; margin-right: 10%;">
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-
-        </div>
-        <div class="row justify-content-between" style="padding-top: 13px; margin-bottom:15px; margin-left: 10%; margin-right: 10%;">
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-            <%- include ("thumbnails/movieOnChannel")%>
-
+            <div class="row d-flex justify-content-start" style="padding-top: 13px; margin-bottom: 35px; margin-left: 1%; margin-right: 1%; gap: 25px 7%;">
+                <% playlistVideos.forEach(video => { %>
+                    <div >
+                        <a href="/video?videoid=<%= video.video._id %>">
+                            <img src="<%= video.video.thumbnail_path %>" alt="popular" width="320" height="160" style="border-radius: 12px">
+                        </a>
+                        <div >
+                            <a href="channel?username=<%= video.videoSender.username %>"><img src="<%= video.videoSender.coverPhoto %>" alt="useravatar" width="45" height="45" style="float:left; margin-top: 4px;" ></a>
+                        </div>
+                        <div style="margin-top: 4px; display: flex;  justify-content: space-between; ">
+                            <div style="max-width: 160px; word-wrap: break-word; margin-left:10px">
+                                <a href="/video?videoid=<%= video.video._id %>">
+                                    <% if(video.video.title.length <=37){ %>
+                                        <b><%= video.video.title %> </b>
+                                    <% } else { %>
+                                        <b><%= video.video.title.slice(0,37).padEnd(40,".") %> </b>
+                                    <% } %>
+                                </a>
+                            </div>
+                            <div>
+                                <a href="/video?videoid=<%= video.video._id %>">
+                                    <div style="font-size: 12px;">
+                                        <span class="fa fa-star <% if(video.avg_rating >=1){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=2){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=3){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=4){%>checked<%}%> fa-lg"></span>
+                                        <span class="fa fa-star <% if(video.avg_rating >=5){%>checked<%}%> fa-lg"></span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="color: gray; margin-left:5px; clear:both">
+                            <a href="channel?username=<%= video.videoSender.username %>" style="color: dimgray">
+                                <%= video.videoSender.username %>
+                            </a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
         </div>
 
 

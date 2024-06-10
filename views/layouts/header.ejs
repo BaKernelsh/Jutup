@@ -32,8 +32,9 @@
 
     <body>
 
+    <% if(isLoggedIn) {%>
     <div id="channelMenu" class="channel-menu">
-        <a href="/channel/own">
+        <a href="/channel?username=<%= user.username %>">
             <div>
                 Mój kanał
             </div>
@@ -44,6 +45,7 @@
             </div>
         </a>
     </div>
+    <% } %>
 
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
         <div class="container-fluid ml-0 mr-0 p-0" >

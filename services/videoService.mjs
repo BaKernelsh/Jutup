@@ -46,7 +46,7 @@ const getVideo = async(videoId) => {
             let videoSender;
             const user = await UserService.getUser(video.user_id);
                 videoSender = user;
-
+        console.log(video);
             return {video, videoSender};
         }
 
@@ -55,6 +55,35 @@ const getVideo = async(videoId) => {
     }
 }
 
+const getUserVideosByUserId = async(userId) => {
+    try {
+        let userIdString = userId;
+        if(typeof userIdString !== "string"){
+            userIdString = userId.toString();
+        }
+
+        const videos = await db.collection("videos").find({
+            "user_id": new ObjectId(userIdString)
+        })
+            .sort("upload_date", -1)
+            .toArray();
+
+        return videos;
+    }catch(error){
+        console.log("error pobieranie flilmow uzytk");
+    }
+}
+
+const getUserVideosByUsername = async(username) => {
+    try {
+        const user = await UserService.getUserByUsername(username);
+
+        return await getUserVideosByUserId(user._id);
+
+    }catch(error){
+        console.log("error pobieranie flilmow uzytk");
+    }
+}
 
 const getTopThreeVideos = async(xLastHours) => {
     try {
@@ -211,5 +240,6 @@ export default {
     getTopThreeVideos,
     get20Popular,
     get4FromSubscribed,
-
+    getUserVideosByUserId,
+    getUserVideosByUsername,
 }

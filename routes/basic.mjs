@@ -2,23 +2,32 @@ import express from "express";
 import db from "../database/conn.mjs";
 import bcrypt from "bcrypt";
 import VideoService from "../services/videoService.mjs";
+import UserService from "../services/userService.mjs";
 
 const router = express.Router();
 
 router.get("/", async(req, res) => {
 
-    let topThreeVideos, xLastHours=4; //TODO kiedy jest 0 filmów w bazie
+    let topThreeVideos, xLastHoursTop3=4; //TODO przypadek kiedy jest 0 filmów w bazie
     do{
-        topThreeVideos = await VideoService.getTopThreeVideos(xLastHours);
-        xLastHours += 4;
+        topThreeVideos = await VideoService.getTopThreeVideos(xLastHoursTop3);
+        xLastHoursTop3 += 4;
     }while(topThreeVideos.length < 3)
 
-    let twentyPopular = await VideoService.get20Popular(10);
+    let twentyPopular/* = await VideoService.get20Popular(10)*/,xLastHours20Pop=4;
+    let loopCount=0;
+    do{
+        twentyPopular = await VideoService.get20Popular(xLastHours20Pop);
+        xLastHours20Pop += 4;
+        loopCount++;
+    }while(twentyPopular.length <= 20 && loopCount<=20)
 
     if(req.session.user_id) {
+        const user = await UserService.getUser(req.session.user_id);
         let fourFromSubs = await VideoService.get4FromSubscribed(req.session.user_id);
         res.render("index", {
-            isLoggedIn: req.session.user_id ? true : false,
+            user: user,
+            isLoggedIn: true,
             topThreeVideos: topThreeVideos,
             twentyPopular: twentyPopular,
             fourFromSubs: fourFromSubs,
@@ -48,7 +57,7 @@ router.post("/login", async (req, res) => {
                 if(isVerified){
                     //console.log(user._id);
                     req.session.user_id = user._id;
-                    console.log(req.session.user_id)
+                    //console.log(req.session.user_id)
                     res.redirect("/");
                 }else {
                     res.render("login", { message: "Nieprawidłowe hasło.", email: user.email });
@@ -79,6 +88,7 @@ router.post("/register", async (req, res) => {
                     "password": hash,
                     "coverPhoto": "public/images/userAvatarChannel.png",
                     "image": "",
+                    "channelDescription": "",
                     "subscribers": 0,
                     "subscriptions": [],
                     "playlists": [],
