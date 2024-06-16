@@ -37,7 +37,7 @@
                 <span style="display: inline-block; vertical-align: middle">Losowa kolejność</span>
             </button>
             <% if(own) { %>
-            <a class="ml-auto" href="/playlists" style="margin-right: 2px">
+            <a class="ml-auto" href="/playlists" style="margin-right: 2px" onclick="deletePlaylist()">
                 <img src="/public/images/trash.png" alt="delete playlist" width="25" height="25">
             </a>
             <% } %>
@@ -104,6 +104,21 @@
                 document.getElementById("PlName").innerHTML = document.getElementById("PlistName").value;
                 closeForm();
             }
+
+            async function deletePlaylist() {
+                const res = await fetch("/playlist/<%= playlist._id%>",{
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                const result = await res.json();
+                showToast(result.message);
+                window.location.replace("/<%= username %>/playlists");
+            }
+
+
         </script>
 
 <%- include ("layouts/footer")%>

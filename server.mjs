@@ -4,10 +4,12 @@ import "express-async-errors";
 import basic from "./routes/basic.mjs";
 import video from "./routes/video.mjs";
 import playlist from "./routes/playlist.mjs";
+import help from "./routes/help.mjs";
 import path from "path";
 import { fileURLToPath } from 'url';
 import bodyParser from "body-parser";
 import channel from "./routes/channel.mjs";
+
 
 
 const app = express();
@@ -21,6 +23,7 @@ app.use(expressSession({
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.set("views", path.join(__dirname, "views"));
@@ -31,6 +34,7 @@ app.use(basic);
 app.use(video);
 app.use(channel);
 app.use(playlist);
+app.use(help);
 //app.use("/movies", movies);
 
 /*app.use((err, req, res, next) => {

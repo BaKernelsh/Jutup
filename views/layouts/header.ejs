@@ -27,6 +27,17 @@
                     channelMenu.style.visibility = "hidden";
                 }
             });
+
+            function showToast(message) {
+                const toast = document.getElementById("toast");
+                toast.textContent = message;
+                toast.className = "toast show";
+
+                setTimeout(function() {
+                    toast.className = toast.className.replace("show", "");
+                }, 3000); // 3 seconds duration
+            }
+
         </script>
     </head>
 
@@ -34,7 +45,7 @@
 
     <% if(isLoggedIn) {%>
     <div id="channelMenu" class="channel-menu">
-        <a href="/channel?username=<%= user.username %>">
+        <a href="/channel?username=<%= username %>">
             <div>
                 Mój kanał
             </div>
@@ -60,7 +71,7 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
 
-            <!-- Images on the right -->
+            <!-- Help, Dodawanie, Profil-->
             <ul class="navbar-nav ml-auto" >
                 <li class="nav-item">
                     <a class="nav-link" href="/help">
@@ -94,7 +105,6 @@
             <!-- Sidebar -->
             <div class="col-lg-auto  bg-light " style="height: 100vh; width:200px; padding: 0">
                 <div class="d-flex flex-column justify-content-start position-fixed" style="height: 100%;">
-                    <!-- Sidebar content -->
                     <a class="sidebar-a" href="/">
                         <div class="sidebar-div">
                             <img src="/public/images/home_icon.jpg" alt="home" width="24" height="24">
@@ -115,47 +125,40 @@
                             </div>
                         </a>
                     <% } else { %>
-                        <a class="sidebar-a" style="margin-top:5px" href="/playlists">
+                        <a class="sidebar-a" style="margin-top:5px" href="/<%= username %>/playlists">
                             <div class="sidebar-div" style="border-bottom: none">
                                 <img src="/public/images/playlist_bttn.png" alt="home" width="24" height="24">
                                 <b>Twoje Playlisty</b>
                             </div>
                         </a>
-                        <a class="sidebar-a" href="/">
+                        <a class="sidebar-a" href="/playlist?playlistid=<%= userPlaylists[0]._id %>">
                             <div class="sidebar-div" style="border-bottom: none">
                                 <img src="/public/images/playlist_bttn.png" alt="home" width="24" height="24">
-                                <b>Playlista 1</b>
+                                <b><%= userPlaylists[0].playlistName %></b>
                             </div>
                         </a>
-                        <a class="sidebar-a" href="/">
+                        <a class="sidebar-a" href="/playlist?playlistid=<%= userPlaylists[1]._id %>">
                             <div class="sidebar-div" style="border-bottom: none">
                                 <img src="/public/images/playlist_bttn.png" alt="home" width="24" height="24">
-                                <b>Playlista 2</b>
+                                <b><%= userPlaylists[1].playlistName %></b>
                             </div>
                         </a>
-                        <a class="sidebar-a" href="/">
+                        <a class="sidebar-a" href="/playlist?playlistid=<%= userPlaylists[2]._id %>">
                             <div class="sidebar-div">
                                 <img src="/public/images/playlist_bttn.png" alt="home" width="24" height="24">
-                                <b>Playlista 3</b>
+                                <b><%= userPlaylists[2].playlistName %></b>
                             </div>
                         </a>
                         <h5 style="margin-left:8px; margin-top:10px">Subskrybcje</h5>
-                        <div class="row sidebar-sub" style="margin-left: 8px">
-                            <img src="/public/images/Useravatar.png" alt="avatar" width="40" height="40">
-                            <b>Kanał 1</b>
-                        </div>
-                        <div class="row sidebar-sub" style="margin-left: 8px">
-                            <img src="/public/images/Useravatar.png" alt="avatar" width="40" height="40">
-                            <b>Kanał 2</b>
-                        </div>
-                        <div class="row sidebar-sub" style="margin-left: 8px">
-                            <img src="/public/images/Useravatar.png" alt="avatar" width="40" height="40">
-                            <b>Kanał 3</b>
-                        </div>
-                        <div class="row sidebar-sub" style="margin-left: 8px">
-                            <img src="/public/images/Useravatar.png" alt="avatar" width="40" height="40">
-                            <b>Kanał 4</b>
-                        </div>
+                        <% userSubscriptions.forEach(sub => { %>
+                        <a href="/channel?username=<%= userSubscriptions[0].subUsername %>">
+                            <div class="row sidebar-sub" style="margin-left: 8px" >
+                                <img src="/public/images/Useravatar.png" alt="avatar" width="40" height="40">
+                                <b><%= userSubscriptions[0].subUsername %></b>
+                            </div>
+                        </a>
+                        <% }) %>
                     <% } %>
                 </div>
+                <div id="toast" class="toast">Playlist created successfully</div>
             </div>

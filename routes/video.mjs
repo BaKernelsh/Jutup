@@ -4,12 +4,13 @@ import VideoService from "../services/videoService.mjs";
 import videoService from "../services/videoService.mjs";
 import UserService from "../services/userService.mjs";
 import PlaylistService from "../services/playlistService.mjs";
+import userAndPlaylists from "../userAndPlaylists.mjs";
 
 
 
 const router = express.Router();
 
-router.get("/upload", async(req, res) => {
+router.get("/upload",userAndPlaylists, async(req, res) => {
     if(req.session.user_id){
         const user = await UserService.getUser(req.session.user_id);
         res.render("upload", {
@@ -47,7 +48,7 @@ router.post("/upload", async(req, res) => {
 })
 
 //Strona wyswietlająca video
-router.get("/video", async(req, res) => {
+router.get("/video",userAndPlaylists, async(req, res) => {
     let videoId = req.query.videoid;
     //console.log(videoId);
 
@@ -63,11 +64,9 @@ router.get("/video", async(req, res) => {
         videoAndUser = await videoService.getVideo(videoId);
     }
 
-    let userPlaylists; //let user;
+    let userPlaylists;
     if(req.session.user_id){
-        //user = await UserService.getUser(req.session.user_id);
         userPlaylists = await PlaylistService.getUserPlaylistList(req.session.user_id);
-        console.log(userPlaylists);
     }
 
 

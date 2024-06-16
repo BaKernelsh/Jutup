@@ -105,6 +105,28 @@ const addToPlaylist = async(playlistId, videoId, currentUserId) => {
     }
 }
 
+const deletePlaylist = async(playlistId, currentUserId) => {
+    try{
+        const playlist = await db.collection("playlists").findOne({
+            "_id": new ObjectId(playlistId)
+        });
+
+        if(playlist.user_id.toString() !== currentUserId){
+            console.log("inny user");
+            throw new Error;
+        }else{
+            await db.collection("playlists").deleteOne({
+                    "_id": new ObjectId(playlistId)
+                }
+            );
+        }
+
+    }catch(error){
+        console.log("error deleting playlist", error.message);
+        throw new Error;
+    }
+}
+
 const removeFromPlaylist = async(playlistId, videoId, currentUserId) => {
     try{
         const playlist = await db.collection("playlists").findOne({
@@ -166,5 +188,6 @@ export default {
     removeFromPlaylist,
     removeFromPlaylistAtIndex,
     getUserPlaylists,
-    getUserPlaylistList
+    getUserPlaylistList,
+    deletePlaylist,
 }
