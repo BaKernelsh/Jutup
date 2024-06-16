@@ -2,11 +2,12 @@ import express from "express";
 import db from "../database/conn.mjs";
 import UserService from "../services/userService.mjs";
 import VideoService from "../services/videoService.mjs";
+import userAndPlaylists from "../userAndPlaylists.mjs";
 
 
 const router = express.Router();
 //TODO zmienić na /:channel
-router.get("/channel", async(req, res) => {
+router.get("/channel",userAndPlaylists, async(req, res) => {
     const channelOwnerUsername = req.query.username;
 
     const channelOwner = await UserService.getUserByUsername(channelOwnerUsername); console.log("owner: ", channelOwner);
@@ -26,15 +27,26 @@ router.get("/channel", async(req, res) => {
 });
 
 
-router.get("/settings", async(req, res) => {
+router.get("/settings",userAndPlaylists, async(req, res) => {
     res.render("settings/settings", {isLoggedIn: true, user: await UserService.getUser(req.session.user_id),});
 });
 
-router.get("/settings/changepassword", async(req, res) => {
+router.post("/settings", async(req,res) => {
+    try {
+        if (req.session.user_id) {
+            await UserService.changeUsernameAndDescription(req);
+            return res.status(200).json({message: "Zmieniono dane konta"});
+        }
+    }catch(error){
+        return res.status(500).json({message: "Nie udało się zmienić"});
+    }
+})
+
+router.get("/settings/changepassword",userAndPlaylists, async(req, res) => {
     res.render("settings/changepassword", {isLoggedIn: true, user: await UserService.getUser(req.session.user_id), oldPassGood: true, message: ""});
 });
 
-router.post("/settings/changepassword", async(req, res) => {
+router.post("/settings/changepassword",userAndPlaylists, async(req, res) => {
     if(!req.body.oldPassword ==="dobre"){
         res.render("settings/changepassword",{isLoggedIn: true, oldPassGood: false});
     }
@@ -47,11 +59,11 @@ router.post("/settings/changepassword", async(req, res) => {
     }
 });
 
-router.get("/settings/mymovies", async(req, res) => {
+router.get("/settings/mymovies",userAndPlaylists, async(req, res) => {
     res.render("settings/mymovies", {isLoggedIn: true, user: await UserService.getUser(req.session.user_id),});
 });
 
-router.get("/settings/moviedetails", async(req, res) => {
+router.get("/settings/moviedetails",userAndPlaylists, async(req, res) => {
     res.render("settings/movieDetails", {isLoggedIn: true, user: await UserService.getUser(req.session.user_id),})
 })
 

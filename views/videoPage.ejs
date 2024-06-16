@@ -12,11 +12,11 @@
             </video>
 
         <div class="row" style="margin-top: 8px; margin-left: 0; margin-right: 10%">
-            <a href="/channel">
-             <img src="/public/images/Useravatar.png" alt="useravatar" width="47" height="47">
+            <a href="/channel?username=<%= sender.username %>">
+             <img src="<%= sender.avatar %>" alt="useravatar" width="47" height="47">
             </a>
             <div style="float: left; margin-left: 6px">
-                <a href="/channel"> <b><%= sender.username %></b> </a><br>
+                <a href="/channel?username=<%= sender.username %>"> <b><%= sender.username %></b> </a><br>
                 <% if(!sender.isCurrentUser) { %>
                 <img id="subHeart" src="<% if(!sender.subscribed){%>/public/images/heart_unfilled.png<% } else { %>/public/images/HeartStraight.png<% } %>"
                      alt="from subscribers" width="20" height="20" onclick=subscribeOrUnsubscribe() style="cursor: pointer;">
@@ -69,13 +69,33 @@
 
         <% if(isLoggedIn) { %>
         <div id="playlistList" class="playlist-list">
-            <% userPlaylists.forEach(playlist => { %>
-                <div class="playlist-list-item" onclick=addToPlaylist(<%= playlist._id %>)>
-                    <% playlist.playlistName %>
-                </div>
-            <% }) %>
+            <button onclick="closePlaylistList()" class="form-popup-close ml-1" style="display: inline-block; vertical-align: middle;">
+                <img src="/public/images/closeX.png" alt="close popup" width="20" height="20">
+            </button>
+            <div onclick="openForm()" style="margin-top:8px; font-size: 20px; padding: 5px; cursor: pointer">
+                <p style="margin-bottom: 0px;">Utwórz nową</p>
+            </div>
+            <div style="overflow-y: scroll; width: 275px; height: 100px;">
+                <% userPlaylists.forEach(playlist => { %>
+                    <div class="playlist-list-item" onclick="addToPlaylist('<%= playlist._id %>')" style="cursor: pointer">
+                        <p><%= playlist.playlistName %></p>
+                    </div>
+                <% }) %>
+            </div>
         </div>
         <% } %>
+
+        <div class="form-popup" id="chngPlistNm" style="visibility: hidden; width: max-content; height: max-content; padding-left: 10px; padding-right: 10px; top: 23%; right: 61%; left: 39%;">
+            <div>
+                <span style="font-size: 25px;">Wpisz nazwę nowej playlisty</span>
+                <button onclick="closeForm()" class="form-popup-close ml-1" style="display: inline-block; vertical-align: middle;">
+                    <img src="/public/images/closeX.png" alt="close popup" width="20" height="20">
+                </button>
+            </div>
+            <form action="javascript:;" onsubmit="createPlaylist()">
+                <input type="text" name="PlistName" id="PlistName" style="width: 100%; margin-top: 9px;" required>
+            </form>
+        </div>
 
         <div id="playlistEnded" class="playlist-ended">
             <span>Koniec playlisty</span>
@@ -83,6 +103,7 @@
                 <img src="/public/images/replay-button.png" alt="replay" width="100" height="100">
             </button>
         </div>
+
 
 
         <script> //playlisty
@@ -108,8 +129,13 @@
                 document.getElementById("playlistList").style.visibility = "visible";
             }
 
+            function closePlaylistList() {
+                document.getElementById("playlistList").style.visibility = "hidden";
+            }
+
             async function addToPlaylist(playlistToAddId) {
-                await fetch(`/addToPlaylist/${playlistToAddId}`,{
+                console.log(playlistToAddId);
+                const res = await fetch(`/addToPlaylist/${playlistToAddId}`,{
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json"
@@ -118,6 +144,8 @@
                         "videoId": "<%= videoId %>"
                     })
                 })
+                const result = await res.json();
+                showToast(result.message);
             }
 
             function goToFirst() {
@@ -131,10 +159,43 @@
                 if(!playlistEndedWindow.contains(event.target)){
                     playlistEndedWindow.style.visibility = "hidden";
                 }
-                /*if(!playlistList.contains(event.target) && playlistList.style.visibility==="visible"){
+                /*if(!(playlistList.contains(event.target)) && playlistList.style.visibility==="visible"){
                     playlistList.style.visibility = "hidden";
                 }*/
             });
+
+            async function createPlaylist() {
+                const newPlaylistName = document.getElementById("PlistName").value;
+
+                const response = await fetch("/playlist", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "playlistName": newPlaylistName,
+                        "firstVideoId": "<%= videoId %>"
+                    })
+                })
+
+                const result = await response.json();
+                closeForm();
+                showToast(result.message);
+            }
+
+            function openForm() {
+                const formPopup = document.getElementById("chngPlistNm");
+
+                formPopup.style.visibility = "visible";
+                console.log("popup");
+            }
+
+            function closeForm() {
+                const formPopup = document.getElementById("chngPlistNm");
+                formPopup.style.visibility = "hidden";
+                document.getElementById("PlistName").value = "";
+            }
+
         </script>
 
         <script> //ocenianie i subskrybcje

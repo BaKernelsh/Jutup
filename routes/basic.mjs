@@ -3,16 +3,18 @@ import db from "../database/conn.mjs";
 import bcrypt from "bcrypt";
 import VideoService from "../services/videoService.mjs";
 import UserService from "../services/userService.mjs";
+import userAndPlaylists from "../userAndPlaylists.mjs"
 
 const router = express.Router();
 
-router.get("/", async(req, res) => {
+router.get("/",userAndPlaylists, async(req, res) => {
 
-    let topThreeVideos, xLastHoursTop3=4; //TODO przypadek kiedy jest 0 filmów w bazie
+    let topThreeVideos, xLastHoursTop3=4; let loopCountTop=0;
     do{
         topThreeVideos = await VideoService.getTopThreeVideos(xLastHoursTop3);
         xLastHoursTop3 += 4;
-    }while(topThreeVideos.length < 3)
+        loopCountTop++;
+    }while(topThreeVideos.length < 3 && loopCountTop<=40)
 
     let twentyPopular/* = await VideoService.get20Popular(10)*/,xLastHours20Pop=4;
     let loopCount=0;
@@ -20,7 +22,7 @@ router.get("/", async(req, res) => {
         twentyPopular = await VideoService.get20Popular(xLastHours20Pop);
         xLastHours20Pop += 4;
         loopCount++;
-    }while(twentyPopular.length <= 20 && loopCount<=20)
+    }while(twentyPopular.length <= 20 && loopCount<=40)
 
     if(req.session.user_id) {
         const user = await UserService.getUser(req.session.user_id);
@@ -113,7 +115,7 @@ router.get("/logout", (req, res) => {
     res.redirect("/");
 })
 
-router.get("/help", async(req, res) => {
+router.get("/help",userAndPlaylists, async(req, res) => {
     res.render("help", {
         isLoggedIn: req.session.user_id ? true : false,
         user: await UserService.getUser(req.session.user_id),

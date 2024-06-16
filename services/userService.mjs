@@ -28,6 +28,23 @@ const getUserByUsername = async (username) => {
     }
 }
 
+const changeUsernameAndDescription = async(req) => {
+    try {
+        await db.collection("users").updateOne({
+                "_id": new ObjectId(req.session.user_id)
+            },
+            {
+                $set: {
+                    username: req.body.username,
+                    channelDescription: req.body.channelDesc
+                }
+            }
+        );
+    }catch(error){
+        throw new Error;
+    }
+}
+
 
 const subscribeOrUnsubscribe = async(userId, userIdToSubscribe) => {
     try {
@@ -82,9 +99,11 @@ const subscribesTo = async(subscribeR, subscribeD) => {
 }
 
 
+
 export default {
     getUser,
     getUserByUsername,
     subscribeOrUnsubscribe,
     subscribesTo,
+    changeUsernameAndDescription,
 };

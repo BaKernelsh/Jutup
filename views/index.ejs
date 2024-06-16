@@ -1,12 +1,12 @@
 <%- include ("layouts/header")%>
 
 
-        <!-- Main content -->
         <div class="col" style="padding-left:0">
             <div class="container-fluid">
                 <div class="row d-flex justify-content-between justify-content-end">
 
                     <div class="col-lg-auto mt-auto" style="margin-left: 40px;">
+                        <% if(topThreeVideos[1]) { %>
                         <a href="/video?videoid=<%= topThreeVideos[1]._id %>">
                         <img src="<%= topThreeVideos[1].thumbnail_path %>" alt="secondbestvideo" width="460" height="255"  style="border-radius: 12px; ">
                         <div class="row" style="margin-top: 8px; margin-left: 0;">
@@ -28,9 +28,13 @@
                             </div>
                         </div>
                         </a>
+                        <% } else {%>
+                        <% } %>
                     </div>
 
+
                     <div class="col-lg-auto mt-auto" style="margin-left: 40px; ">
+                        <% if(topThreeVideos[0]) { %>
                         <a href="/video?videoid=<%= topThreeVideos[0]._id %>">
                         <img src="<%= topThreeVideos[0].thumbnail_path %>" alt="firstbestvideo" width="475" height="275" style="border-radius: 12px">
                         <div class="row" style="margin-top: 8px; margin-left: 0">
@@ -52,9 +56,12 @@
                             </div>
                         </div>
                         </a>
+                        <% } else {%>
+                        <% } %>
                     </div>
 
                     <div class="col-lg-auto mt-auto" style="margin-left: 40px; ">
+                        <% if(topThreeVideos[2]) { %>
                         <a href="/video?videoid=<%= topThreeVideos[2]._id %>">
                         <img src="<%= topThreeVideos[2].thumbnail_path %>" alt="thirdbestvideo" width="440" height="230" style="border-radius: 12px">
                         <div class="row" style="margin-top: 8px; margin-left: 0">
@@ -76,6 +83,8 @@
                             </div>
                         </div>
                         </a>
+                        <% } else {%>
+                        <% } %>
                     </div>
                 </div>
                 <hr style="padding-bottom:25px">
