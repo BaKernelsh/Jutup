@@ -131,24 +131,30 @@
                                 <b>Twoje Playlisty</b>
                             </div>
                         </a>
+                        <% if(userPlaylists[0]) { %>
                         <a class="sidebar-a" href="/playlist?playlistid=<%= userPlaylists[0]._id %>">
                             <div class="sidebar-div" style="border-bottom: none">
                                 <img src="/public/images/playlist_bttn.png" alt="home" width="24" height="24">
                                 <b><%= userPlaylists[0].playlistName %></b>
                             </div>
                         </a>
+                        <% } %>
+                        <% if(userPlaylists[1]) { %>
                         <a class="sidebar-a" href="/playlist?playlistid=<%= userPlaylists[1]._id %>">
                             <div class="sidebar-div" style="border-bottom: none">
                                 <img src="/public/images/playlist_bttn.png" alt="home" width="24" height="24">
                                 <b><%= userPlaylists[1].playlistName %></b>
                             </div>
                         </a>
+                        <% } %>
+                        <% if(userPlaylists[2]) { %>
                         <a class="sidebar-a" href="/playlist?playlistid=<%= userPlaylists[2]._id %>">
                             <div class="sidebar-div">
                                 <img src="/public/images/playlist_bttn.png" alt="home" width="24" height="24">
                                 <b><%= userPlaylists[2].playlistName %></b>
                             </div>
                         </a>
+                        <% } %>
                         <h5 style="margin-left:8px; margin-top:10px">Subskrybcje</h5>
                         <% userSubscriptions.forEach(sub => { %>
                         <a href="/channel?username=<%= userSubscriptions[0].subUsername %>">
